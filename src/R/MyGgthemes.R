@@ -13,8 +13,9 @@ tema1 <- theme(
 tema2 <- theme(
   panel.background = element_rect(fill="white"),
   plot.background = element_rect(fill="white"),
+  axis.title = element_text(colour="grey50",vjust=0.2),
   axis.text.x=element_text(angle=90,hjust=1,face=2,size=7,colour="grey30"),
-  axis.text.y=element_text(colour=c(rep("slategray4",17),"red",rep("slategray4",10)),face=2,size=7),
+  axis.text.y=element_text(colour="grey30",face=2,size=7),
   axis.ticks.y=element_line(colour="royalblue",size=2),
   axis.ticks.length=unit(.1,"cm"),
   panel.grid.minor.y=element_blank(),
@@ -23,6 +24,8 @@ tema2 <- theme(
   panel.grid.major.x=element_line(linetype=2,size=0.1,colour="grey95" ),
   panel.grid.major.y=element_line(linetype=2, size=0.1,colour="grey95"),
   plot.title = element_text(size = 16,colour="grey60"),
+  axis.title.y = element_text(size=10),
+  axis.title.x = element_text(size=10),
   plot.subtitle = element_text(size = 12, color = "darkslategrey", margin = margin(b = 25)),
   plot.caption = element_text(size = 8, margin = margin(t = 10), color = "slategray4", hjust = 0)
 )

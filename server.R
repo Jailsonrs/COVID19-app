@@ -52,9 +52,10 @@ function(input, output,session){
     
     ggplot(filtered_df(),aes(as.Date(data),casosAcumulado, group=1))+
       geom_line(colour="steelblue")+
-      scale_y_continuous(limits = c(0,50000), breaks = seq(0,50000,2000))+
+      scale_y_continuous(limits = c(0,50000), breaks = seq(0,50000,10000))+
       scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      tema2+theme(legend.position = "none")+tema2+theme(legend.position = "none")+
+      tema2+theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45))+
       labs(x="Data",y="Quantidade de Casos (Cumulativo)")-> gp
     gp<-ggplotly(gp)
     
@@ -88,7 +89,7 @@ output$graphinput  <- renderPlotly({
 
       ggplot(filtered_df2(),aes(as.Date(data), casosAcumulado, group = 1))+
       geom_line(colour = "steelblue")+tema2+
-      scale_y_continuous(breaks = seq(0, 300000, 20000))+
+      scale_y_continuous(breaks = seq(0, 300000, 50000))+
       scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
       theme(axis.text.x = element_text(angle = 45))+
       labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
@@ -98,34 +99,30 @@ output$graphinput  <- renderPlotly({
 })
 
 
-output$graphinput1 <- renderPlotly({
-      ggplot(filtered_df2(),aes(as.Date(data), obitosAcumulado, group = 1))+
-      geom_line(colour = "steelblue")+tema2+
-      scale_y_continuous(breaks = seq(0, 32000, 2000))+
-      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      theme(axis.text.x = element_text(angle = 45))+
-      labs( x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
-})
-  
-  
 output$qtdObt <- renderText({
   
-  paste(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100,3),"%")
-  
+  ##format(paste(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100,6),"%"),digits = 6, big.mark = ",", small.mark = ",", decimal.mark=",")
+  paste(format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100, 2), digits = 2, big.mark = ",", small.mark = ",", decimal.mark=","),"%")
   
 })
 
 
 output$qtdRecup <- renderText({
+    format(max(na.omit(as.double(filtered_df2()$Recuperadosnovos))),digits=10,big.mark=".", small.mark=",")  
+})
+output$incid <- renderText({
+  format(round((max(filtered_df2()$casosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 6), digits = 6, big.mark = ",", small.mark = ",", decimal.mark=",")
+})
 
-  max(na.omit(as.double(filtered_df2()$Recuperadosnovos)))
-  
+
+output$mortdd <-  renderText({
+  format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 2), digits = 3, big.mark = ",", small.mark = ",", decimal.mark=",")
 })
 
 output$graphinput2 <- renderPlotly({
-      ggplot(filtered_df2(),aes(as.Date(data), obitosAcumulado, group = 1))+
+      ggplot(filtered_df2(),aes(as.Date(data), log(obitosAcumulado), group = 1))+
       geom_line(colour = "steelblue")+tema2+
-      scale_y_continuous(breaks = seq(0, 32000, 2000))+
+      scale_y_continuous(breaks = seq(0, 10, 2))+
       scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
       theme(axis.text.x = element_text(angle = 45))+
       labs(title="", x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
