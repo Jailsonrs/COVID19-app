@@ -14,10 +14,13 @@ source("../SRC/MyGgthemes.R")
 
 options(warning = FALSE, warnings = -1, warn =-1)
 setwd("~/COVID/")
-prepro <- readRDS(file.path("SHINY","data","preprocessed","RDS","Prepro.RDS"))
+prepro <- readRDS(file.path("SHINY","data","raw","HIST_PAINEL_COVIDBR_21mai2020.xlsx"))
 
 #skip
-dadosBr <- readxl::read_excel("DATA/RAW/MAIN/HIST_PAINEL_COVIDBR_20mai2020.xlsx")
+dadosBr <- readxl::read_excel(file.path("SHINY","data","raw","HIST_PAINEL_COVIDBR_21mai2020.xlsx"))
+dadosBr1<-  dadosBr %>% filter(!is.na(dadosBr$codmun))
+
+
 dadosBr <- dadosBr[!is.na(dadosBr$populacaoTCU2019),]
 dadosBr$populacaoTCU2019 <- as.double(dadosBr$populacaoTCU2019)
 dadosMun <- readxl::read_excel("DATA/RAW/AUXILIARY/A221833189_28_143_208.xlsx")
