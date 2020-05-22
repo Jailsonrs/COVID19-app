@@ -1,0 +1,279 @@
+    <!DOCTYPE html>  
+    <html lang="en"> 
+    <head>
+      <title>Painel COVID19 </title>
+
+      {{tags$script(src = "https://code.jquery.com/jquery-3.1.1.min.js")}}
+      {{ useShinyjs()}}
+      {{ bootstrapLib()}}
+      {{ headContent() }}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <link href="style.css" rel="stylesheet"/>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway:wght@500&display=swap');
+      </style>
+    </head>
+
+    <body id="bootstrap-override" class="corpo">
+      <!--    -->
+      <nav class="navbar navbar-fixed-top">
+       <div class="container-fluid">
+         <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"></button>
+           <span class="icon-bar"></span>   
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+
+           {{tags$head(tags$style(HTML("
+           .info-box {
+           display: block;
+           min-height: 90px;
+           background: #fff;
+           width: 400%;
+
+           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+           border-radius: 2px;
+           margin-bottom: 15px;
+           font-size: 22px;
+           margin:0;
+           padding:0;
+
+         }
+         .info-box small {
+         font-size: 22px;
+       }
+       .info-box .progress {
+       background: rgba(0, 0, 0, 0.2);
+       margin: 5px -10px 5px -10px;
+       height: 2px;
+     }
+     .info-box .progress,
+     .info-box .progress .progress-bar {
+     border-radius: 0;
+    }
+    .info-box .progress .progress-bar {
+    background: #fff;
+    }
+    .info-box-icon {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 45px;
+    line-height: 90px;
+    background: red; !important
+    }
+    .info-box-icon > img {
+    max-width: 100%;
+    }
+    .info-box-content {
+    padding: 5px 10px;
+    margin-left: 90px;
+    }
+    .info-box-number {
+    display: block;
+    font-weight: bold;
+    font-size: 40px;
+    }
+    .progress-description,
+    .info-box-text {
+    display: block;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+    .info-box-text {
+    text-transform: uppercase;
+    font-weight:bold;
+    }
+    .info-box-more {
+    display: block;
+    }
+    .progress-description {
+    margin: 0;
+    }
+
+    .bg-aqua,
+    .callout.callout-warning,
+    .alert-warning,
+    .label-warning,
+    .modal-warning .modal-body {
+    background-color: #084270 !important;
+    }")))}}
+
+
+    <a class="navbar-brand" href="#">COVID19 - Acompanhamento de Casos</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+     <ul class="nav navbar-nav">
+
+      <ul id="sigbuttons" class="nav navbar-nav navbar-right">
+       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadastrar</a></li>
+       <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     </ul>
+    </ul>
+
+    </div>
+    </div>
+
+    </nav>
+
+    <!--
+            <div class="container">
+                <div class="row">
+                     <div class="col-lg-12 logo">
+                    </div>
+                    <div class="col-lg-4 navega">
+                        <nav id="barrasup" class="navbar navbar-fixed-top navega navbar-custom">
+                            <ul class="nav navbar-nav navbar-custom">
+                                <li class="active" data-toggle="tab"> <a href="#ini" >Início</a> </li>
+                                <li data-toggle="tab"> <a href="#ini" >Análises e Resultados</a> </li>
+                                <li data-toggle="tab" class="selected"><a href="#ini" >Dados </a> </li>
+                                <li data-toggle="tab"> <a class="dropdown" href="#t">Sobre nós </a> </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+              </div>-->
+
+              <div class="container-fluid tab conteudo">
+                
+
+                <!------------------------------>
+                <!--- ABA PAINEL LATERAL ------->
+                <!------------------------------>
+
+                <!------------------------------>
+                <!-------- ABA DASHBOARD ------->
+                <!------------------------------>
+                
+                  <hr>
+                  <hr>
+                <div class="container">
+
+                  <div class="row" id="1">
+                    <div class = "col-lg-3 col-sm-6">        
+                      <div class="infoBox">
+                       <div class="card">
+                          <h5 style="font-weight: bolder;">  Taxa de Mortalidade: </h5>
+                          <div class="card-body">
+
+                            {{info}}
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class = "col-lg-3 col-sm-6">        
+                      <div class="infoBox">
+                        <h5 style="font-weight: bolder;">  Recuperados: </h5>
+                      <div class="card">
+                          <div class="card-body">
+                            {{info2}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class = "col-lg-3 col-sm-6">        
+                      <div class="infoBox">
+                      <div class="card">
+                          <div class="card-body">
+                            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class = "col-lg-3 col-sm-6">        
+                      <div class="infoBox">
+                      <div class="card">
+                          <div class="card-body">
+                            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                  <div class="row" id="2">
+                    <div class = "col-lg-6 col-sm-6">        
+                      <div class="boxCard">
+                       <div class="card">
+                          <div class="card-body">
+                            {{kpi4}}
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class = "col-lg-6 col-sm-6">        
+                      <div class="boxCard">
+                      <div class="card">
+                          <div class="card-body">
+                            {{kpi5}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                    <div class = "col-lg-8 col-sm-6">        
+                      <div class="boxCard">
+                       <div class="card">
+                          <div class="card-body">
+                            {{kpi6}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class = "col-lg-4">        
+                      <div class="boxCard">
+                       <div class="card">
+                          <div class="card-body">
+                            {{Regiao}}
+                            <hr>
+                            {{Estado}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              
+
+                </div>
+              </div>
+              <!------------------------------>
+              <!--- ABA TABELA RECOMENDACAO -->
+              <!----------------------------
+
+              <div class="tab-pane" id="2">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-4 tabela" style="font-size: 80%">
+                      {{tab2}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+
+            </div>
+            <nav class="navbar navbar-nav navbar-default navbar-fixed-bottom">
+
+            </nav>-->
+          </div>
+        </body>
+        {{includeScript("www/alert.js")}}
+
+        </html>
+

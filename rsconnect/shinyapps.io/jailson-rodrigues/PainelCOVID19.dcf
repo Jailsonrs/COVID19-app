@@ -1,0 +1,12 @@
+name: PainelCOVID19
+title: PainelCOVID19
+username:
+account: jailson-rodrigues
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2335643
+bundleId: 3175759
+url: https://jailson-rodrigues.shinyapps.io/PainelCOVID19/
+when: 1590082999.10834
+asMultiple: FALSE
+asStatic: FALSE

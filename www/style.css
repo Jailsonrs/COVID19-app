@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+
+
+#myNavbar   li a{ 
+  color:white;
+  height: 29px;
+  padding:5px;
+  padding-right:20px; 
+
+}
+
+
+
+.boxCard  {
+  width: 100%;
+  height: 400px;
+  min-width: 300px;
+  background: white;
+  box-shadow: 1px 1px 5px grey;
+  margin-top: -20px;
+  padding-top: 30px;
+  padding-left: 15px;
+  margin-left: -100px;
+  margin-bottom: 90px;
+  border-radius: 12px;
+}
+
+#qtdObt, #qtdRecup{
+  font-size: 29px;
+  padding-top: 60px;
+  font-weight: bolder;
+  margin-left:60px;
+  color: #4dd68f;
+}
+
+
+
+.infoBox{
+  width: 100%;
+  height: 100px;
+  min-width: 60px;
+  background: white;
+  box-shadow: 1px 1px 5px grey;
+  margin-top: 0px;
+  padding-top: 1px;
+  padding-left: 15px;
+  margin-left: -100px;
+  margin-bottom: 90px;
+  border-radius: 8px;
+
+
+
+}
+
+.plotly .plot-container{
+
+ width 100%
+ height: 20px
+
+}
+
+
+.painel-heading{
+    background:#084270;
+    color: white;
+    font-size: 16px;
+    box-shadow: 0px -2px 2px grey;
+    width:400px;
+    position: relative;
+    font-weight: bold;
+}
+
+#\31  > div > div:nth-child(1) > div:nth-child(1) > div > div > span{
+
+    background-color: red;
+
+}
+
+#head1{
+    width:435px;
+    bottom: -53px;
+    padding:10px;
+    height: 50px;
+    left: 35px;
+    text-align: center;
+    z-index: 999; 
+}
+
+#head2{
+    width:435px;
+    left: 510px;
+    bottom: -3px;
+    padding:10px;
+    height: 50px;
+    text-align: center;
+       z-index: 999;
+}
+
+#head3{
+    width:390px;
+    left:  -16px;
+    bottom: 2px;
+    padding:10px;
+    height: 50px;
+    text-align: center; 
+}
+
+#head4{
+  width: 910px;
+  top: 10px;
+  left: 35px;
+    bottom: 2px;
+    padding:10px;
+    height: 50px;
+    text-align: center; 
+
+}
+
+div h4{
+  margin-top: -25px;
+  position: relative;
+  margin-left: 48px;
+}
+
+.fa-cogs{
+    font-size: 30px;
+    margin-top: 22px;
+    top: 200px;
+}
+
+
+.tabela{
+    margin-left:  250px;
+}
+
+.caixa{
+    left: 300px
+    width:400px;
+    margin-left: 80px;
+    margin-top: -20px   
+}
+
+
+
+
+.info-box{
+        box-shadow: 0px 1px 10px grey;
+}
+
+ .tab{
+  margin-top: 180px;
+}
+
+.graficos{
+  left:250px;
+  margin-left: -150px;
+  padding: 0px
+  margin-top:100px;
+}
+
+.navbar-custom{
+    height: 12px;
+}
+
+
+.navbar li a:hover {
+    background-color: white;
+}
+
+.navbar li a: {
+    padding-top: 20px;
+}
+
+
+.navbar li a:focus {
+    background-color: red;
+}
+
+.navbar-brand{
+  color: white;
+  font-weight: bolder;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-top: 19px;
+  height: 30px;
+}
+
+
+.nav-tabs li a{
+    color:#004d1a;
+}
+
+
+.nav-tabs li a:hover {
+    color: black;
+}
+
+.navbar{
+  margin:0;
+  background: linear-gradient(158deg, rgba(2,0,36,1) 0%, rgba(193,44,97,1) 0%, rgba(100,45,97,1) 59%, rgba(38,149,237,1) 100%);
+  color:white;
+  min-height: 10px;
+  height:60px;
+  border-radius: 0;
+  box-shadow: 2px 1px 20px grey;
+  margin-left: 0px;
+}
+
+.content{
+    top: 50px;
+    margin: auto;
+    position: relative;
+}
+
+
+
+.rodape{
+    background-color: red;
+    width: 100%;
+    height: 40px;
+}
+
+.side{
+    position: relative;
+    margin-top: -20px;
+    margin-left: 0;
+}
+
+ .logo{
+     
+  background-image:url('img/gato.jpg');
+  height: 800px; 
+  width: 880px; 
+  z-index: 99999999;
+} 
+
+
+.centro{
+    top: -100px;
+    position: relative;
+    left: -20px;
+    height: 200%;
+}
+
+.tab{
+    margin-top: 50px;
+    margin-left: 180px;
+}
+
+.panelr{
+    margin-top: -40px;
+    margin-right: 0;
+    height: 400px;
+    background-color: white;
+    box-shadow: 0px 1px 1px grey;
+}
+
+.panell{
+    margin-top: 0px;   
+    right: -20px;
+    height: 400px;
+    left: 200px;
+    background-color: white;
+    box-shadow: 0px 1px 22px grey;
+    border: 60px;
+    margin-right: 40px;
+}
+
+.time-series-panel{
+    right: -100px;
+    min-width: 100px;
+    width: 910px;
+    margin-top: 10px;
+    right: -20px;
+    height: 400px;
+    left: 200px;
+    background-color: white;
+    box-shadow: 0px 1px 22px grey;
+    border: 60px;
+    margin-right: 40px;
+}
+
+.rpanel{
+    height:100%;
+    top:0px;
+    width: 200px;
+    color: white;
+    margin-left: -196px;
+    position: fixed;
+    background: rgb(2,0,36);
+    background: linear-gradient(158deg, rgba(2,0,36,1) 0%, rgba(193,44,97,1) 0%, rgba(100,45,97,1) 59%, rgba(38,149,237,1) 100%);
+    box-shadow: 1px 1px 1px grey;
+    overflow: true;
+
+    z-index: 1;
+}
+
+.corpo{
+    background-color: #f0f3f4;
+
+}
+
+body{
+    overflow-y: scroll;
+font-family: 'font-family: 'Raleway', sans-serif;';
+
+}
+
+
+
+.btn-sucess{
+    color:#004d1a;
+    margin-left: 108px;
+}
+
+.btn-sucess:hover{
+    color:#105d1a;
+}
+
+
+#bootstrap-override div.form-group.shiny-input-container.ui-draggable.ui-draggable-handle{
+      width:100%;
+      left: 220px;
+      top: -47px;
+      max-width: 300px
+
+}
+
+/*******************/
+
+
+#bootstrap-override button{
+    
+    width:199px;
+    margin-left: -15px; 
+    margin-top: 0px;
+
+}
+
+#bootstrap-override button#btn-add-1{
+    
+    width:100%;
+    margin-left: 550px;
+    margin-top: -180px;
+      max-width: 120px
+}
+
+
+#bootstrap-override button :hover{
+    color: black
+
+
+}
+
+
+
+a.list-group-item , button.list-group-item{
+    color: black;
+     background-color: white;
+     opacity: 1;
+     margin-top:100px; 
+}
+
+.list-group-item a{
+      color: #004d1a;
+
+
+}
+
+i.fa{
+    padding-right: 5px;
+}
+
+#entrada{
+    margin-left: 50px;
+    box-shadow: 0px  0px 20px grey;
+}
+
+
+
+/*********************/
+/*carrinho*/
+
+
+/*
+I wanted to go with a mobile first approach, but it actually lead to more verbose CSS in this case, so I've gone web first. Can't always force things...
+
+Side note: I know that this style of nesting in SASS doesn't result in the most performance efficient CSS code... but on the OCD/organizational side, I like it. So for CodePen purposes, CSS selector performance be damned.
+*/
+/* Global settings */
+/* Global "table" column settings */
+.compras{
+
+  margin-left: 100px;
+  left:200px;
+}
+
+
+#bootstrap-override td>button{
+
+  width: 100px;
+  min-width: 10px;
+  margin-left: 0px;
+  font-size: 10px;
+
+}
+
+
+#tblCart td{
+  text-align: center;
+  width: 100px;
+}
+tbody > td{
+  width: 150px;
+  position: float;
+  text-align: right;#
+}
+
+
+
+p#demo3{
+  font-size: 50px;
+}
+
+
+#demo2{
+  font-size: 15px;
+  text-align: center;
+
+
+}
+#sigbuttons{
+  margin-left:900px;
+  margin-top: -30px;
+
+}
+
+.zoom {
+  padding: 0px;
+  
+  transition: transform .2s; /* Animation */
+  width: 120px;
+  height: 100px;
+  
+}
+
+.zoom:hover {
+  transform: scale(2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
