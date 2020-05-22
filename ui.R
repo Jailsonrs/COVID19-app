@@ -30,6 +30,8 @@ htmlTemplate("index.html",
              ##superior
              kpi4 = withSpinner(plotlyOutput("graphinput", height = "350px",width = "100%"), type=6,color="#00b300"),
              kpi5 = withSpinner(plotlyOutput("graphinput2", height = "350px",width = "100%"), type=6,color="#00b300"),
+             kpi7 = withSpinner(plotlyOutput("graphinput3", height = "320px",width = "100%"), type=6,color="#00b300"),
+             kpi8 = withSpinner(plotlyOutput("graphinput4", height = "320px",width = "100%"), type=6,color="#00b300"),
              ##---------------------------------------------------##---------------------------------------------------
              kpi6 = withSpinner(plotlyOutput("KPIdados", height = "350px"), type=6,color="#00b300"),
              ##kpi2 = withSpinner(plotlyOutput("reativos", height = "299px"), type=6,color="#00b300"),

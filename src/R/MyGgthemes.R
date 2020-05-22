@@ -22,7 +22,7 @@ tema2 <- theme(
   text=element_text(family="Georgia"),
   panel.grid.major.x=element_line(linetype=2,size=0.1,colour="grey95" ),
   panel.grid.major.y=element_line(linetype=2, size=0.1,colour="grey95"),
-  plot.title = element_text(size = 16,colour="grey10"),
+  plot.title = element_text(size = 16,colour="grey60"),
   plot.subtitle = element_text(size = 12, color = "darkslategrey", margin = margin(b = 25)),
   plot.caption = element_text(size = 8, margin = margin(t = 10), color = "slategray4", hjust = 0)
 )
