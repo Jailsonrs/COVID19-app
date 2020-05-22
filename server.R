@@ -50,14 +50,12 @@ function(input, output,session){
     #   ##if(is.null(arquivo())){return(NULL)}
     #
     
-    ggplot(filtered_df(),aes(data,casosAcumulado, group=1))+
+    ggplot(filtered_df(),aes(as.Date(data),casosAcumulado, group=1))+
       geom_line(colour="steelblue")+
       scale_y_continuous(limits = c(0,50000), breaks = seq(0,50000,2000))+
+      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
       tema2+theme(legend.position = "none")+tema2+theme(legend.position = "none")+
-      labs(title= "Casos por Estado:",x="Data",y="Quantidade de Casos (Cumulativo)")-> gp
-    
-    
-    
+      labs(x="Data",y="Quantidade de Casos (Cumulativo)")-> gp
     gp<-ggplotly(gp)
     
     # config(collaborate=FALSE,
@@ -93,20 +91,20 @@ output$graphinput  <- renderPlotly({
       scale_y_continuous(breaks = seq(0, 300000, 20000))+
       scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
       theme(axis.text.x = element_text(angle = 45))+
-      labs(title="Quantidade de Casos Acumulados (Brasil)",x = "Data", y = "Quantidade de Casos (Cumulativo)")
+      labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
 
 
 
 })
 
 
-output$graphinput2 <- renderPlotly({
+output$graphinput1 <- renderPlotly({
       ggplot(filtered_df2(),aes(as.Date(data), obitosAcumulado, group = 1))+
       geom_line(colour = "steelblue")+tema2+
       scale_y_continuous(breaks = seq(0, 32000, 2000))+
       scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
       theme(axis.text.x = element_text(angle = 45))+
-      labs(title="Quantidade de Óbitos (Brasil)", x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
+      labs( x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
 })
   
   
@@ -124,6 +122,41 @@ output$qtdRecup <- renderText({
   
 })
 
+output$graphinput2 <- renderPlotly({
+      ggplot(filtered_df2(),aes(as.Date(data), obitosAcumulado, group = 1))+
+      geom_line(colour = "steelblue")+tema2+
+      scale_y_continuous(breaks = seq(0, 32000, 2000))+
+      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+      theme(axis.text.x = element_text(angle = 45))+
+      labs(title="", x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
+})
+
+
+
+filtered_df3 <- reactive({
+  res3 <- filteredData()  %>% filter(is.na(Município),regiao != "Brasil")
+  res3
+})
+
+output$graphinput3 <- renderPlotly({
+  
+  ggplot(filtered_df3(),aes(as.Date(data), casosAcumulado,colour=estado,group=estado))+
+  geom_line(size=0.5)+tema2+geom_point(size=0.5)+
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+      theme(axis.text.x = element_text(angle = 45))+
+      labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
+
+})
+
+output$graphinput4 <- renderPlotly({
+  
+  ggplot(filtered_df3(),aes(as.Date(data), log(casosAcumulado),colour=estado,group=estado))+
+  geom_line(size=0.3)+tema2+geom_point(size=0.5)+
+  scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+      theme(axis.text.x = element_text(angle = 45))+
+      labs(x = "Data", y = "Log da Quantidade de Casos (Cumulativo)")
+
+})
 
   ##------------------------##
   

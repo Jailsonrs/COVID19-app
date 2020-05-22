@@ -14,7 +14,9 @@ source("../SRC/MyGgthemes.R")
 
 options(warning = FALSE, warnings = -1, warn =-1)
 setwd("~/COVID/")
+prepro <- readRDS(file.path("SHINY","data","preprocessed","RDS","Prepro.RDS"))
 
+#skip
 dadosBr <- readxl::read_excel("DATA/RAW/MAIN/HIST_PAINEL_COVIDBR_20mai2020.xlsx")
 dadosBr <- dadosBr[!is.na(dadosBr$populacaoTCU2019),]
 dadosBr$populacaoTCU2019 <- as.double(dadosBr$populacaoTCU2019)
@@ -64,12 +66,20 @@ geom_line(colour="steelblue")+tema2+scale_y_continuous(breaks=seq(0,300000,20000
 scale_x_date(date_labels = "%d %b %Y",date_breaks = "5 day")+
 theme(axis.text.x = element_text(angle=45))
 
+
+prepro %>% filter(is.na(Município),regiao != "Brasil") %>% group_by(estado,data,casosAcumulado) %>% summarise(maximo = max(casosAcumulado))  %>%
+
+arrange(desc(maximo))
+
+prepro %>% filter(is.na(Município),regiao != "Brasil") %>% 
+ggplot(aes(data, casosAcumulado,colour=estado,group=estado))+
+geom_line(size=0.5)+tema2+geom_point(size=0.5)
 # prepro %>% filter(regiao=="Nordeste",estado=="CE", !is.na(Município)) %>% 
 #   ggplot(aes(.$data, taxaObito,colour=Município,group=Município))+
 #   geom_line()+
 #   scale_y_continuous(limits = c(0,0.09), breaks = seq(0,1,0.009))+
 #   tema2+labs(title="Taxa de Mortalidade COVID19 ao longo do 
 #              \ntempo para todo o Brasil")+theme(legend.position = "none")
-
+?geom_text
 ##-----------------------------------------------------------------------------##
 ##-----------------------------------------------------------------------------##

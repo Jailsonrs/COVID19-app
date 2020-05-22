@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
 
 
 #myNavbar   li a{ 
@@ -13,10 +12,10 @@
 
 .boxCard  {
   width: 100%;
-  height: 400px;
+  height: 430px;
   min-width: 300px;
   background: white;
-  box-shadow: 1px 1px 5px grey;
+  box-shadow: 0.4px 0.4px 2px #BFBFBF;
   margin-top: -20px;
   padding-top: 30px;
   padding-left: 15px;
@@ -25,23 +24,47 @@
   border-radius: 12px;
 }
 
-#qtdObt, #qtdRecup{
-  font-size: 29px;
-  padding-top: 60px;
-  font-weight: bolder;
-  margin-left:60px;
-  color: #4dd68f;
+
+.boxHelper{
+  
+  height:60px;
+  width: 100%;
+  background: white;
+  box-shadow: 0.2px 0.2px 0.5px #E3E3E3;
+  border-radius: 4px;
 }
 
+#qtdRecup{
+  font-size: 45px; 
+  font-family: 'Baloo Chettan 2', cursive;
+  margin-top: 20px;
+  font-weight: 400;
+  margin-left:50px;
+  color: #4dd68f;
+}
+#qtdObt{
+  font-size: 45px; 
+  font-family: 'Baloo Chettan 2', cursive;
+  margin-top: 20px;
+  font-weight: 400;
+  margin-left:50px;
+  color: red;
+}
 
+.card_label{
+  color: #A8A8A8;
+  font-family: 'Baloo Chettan 2', cursive;
+  font-weight: 400;  
+  font-size: 18px;
+}
 
 .infoBox{
   width: 100%;
   height: 100px;
   min-width: 60px;
   background: white;
-  box-shadow: 1px 1px 5px grey;
-  margin-top: 0px;
+  box-shadow: 1px 1px 2px #BFBFBF;
+  margin-top: 50px;
   padding-top: 1px;
   padding-left: 15px;
   margin-left: -100px;
@@ -140,7 +163,11 @@ div h4{
     margin-top: -20px   
 }
 
+#logsclabel{
+  margin-top: -60px;
 
+
+}
 
 
 .info-box{
@@ -185,7 +212,19 @@ div h4{
   height: 30px;
 }
 
+.nav-tabs{
+ border-width: 5px;
+ margin-left: -100px;
+ border-color: #f3f3f3;
 
+
+}
+
+.nav-tabs li{
+  color:#E3E3E3;
+
+
+}
 .nav-tabs li a{
     color:#004d1a;
 }
@@ -212,7 +251,12 @@ div h4{
     position: relative;
 }
 
+.conteudo{
 
+  margin:auto;
+
+
+}
 
 .rodape{
     background-color: red;
@@ -243,28 +287,11 @@ div h4{
 }
 
 .tab{
-    margin-top: 50px;
-    margin-left: 180px;
+    margin-top: 100px;
+    margin-left: 100px; 
 }
 
-.panelr{
-    margin-top: -40px;
-    margin-right: 0;
-    height: 400px;
-    background-color: white;
-    box-shadow: 0px 1px 1px grey;
-}
 
-.panell{
-    margin-top: 0px;   
-    right: -20px;
-    height: 400px;
-    left: 200px;
-    background-color: white;
-    box-shadow: 0px 1px 22px grey;
-    border: 60px;
-    margin-right: 40px;
-}
 
 .time-series-panel{
     right: -100px;
@@ -280,29 +307,16 @@ div h4{
     margin-right: 40px;
 }
 
-.rpanel{
-    height:100%;
-    top:0px;
-    width: 200px;
-    color: white;
-    margin-left: -196px;
-    position: fixed;
-    background: rgb(2,0,36);
-    background: linear-gradient(158deg, rgba(2,0,36,1) 0%, rgba(193,44,97,1) 0%, rgba(100,45,97,1) 59%, rgba(38,149,237,1) 100%);
-    box-shadow: 1px 1px 1px grey;
-    overflow: true;
-
-    z-index: 1;
-}
 
 .corpo{
-    background-color: #f0f3f4;
+    background-color: #fafcfc;
 
 }
 
 body{
     overflow-y: scroll;
-font-family: 'font-family: 'Raleway', sans-serif;';
+    font-family: 'Baloo Chettan 2', cursive;
+    color: #A8A8A8;
 
 }
 
@@ -320,7 +334,7 @@ font-family: 'font-family: 'Raleway', sans-serif;';
 
 #bootstrap-override div.form-group.shiny-input-container.ui-draggable.ui-draggable-handle{
       width:100%;
-      left: 220px;
+      left: 100px;
       top: -47px;
       max-width: 300px
 
@@ -371,11 +385,6 @@ i.fa{
     padding-right: 5px;
 }
 
-#entrada{
-    margin-left: 50px;
-    box-shadow: 0px  0px 20px grey;
-}
-
 
 
 /*********************/
@@ -389,11 +398,6 @@ Side note: I know that this style of nesting in SASS doesn't result in the most 
 */
 /* Global settings */
 /* Global "table" column settings */
-.compras{
-
-  margin-left: 100px;
-  left:200px;
-}
 
 
 #bootstrap-override td>button{
@@ -406,44 +410,4 @@ Side note: I know that this style of nesting in SASS doesn't result in the most 
 }
 
 
-#tblCart td{
-  text-align: center;
-  width: 100px;
-}
-tbody > td{
-  width: 150px;
-  position: float;
-  text-align: right;#
-}
 
-
-
-p#demo3{
-  font-size: 50px;
-}
-
-
-#demo2{
-  font-size: 15px;
-  text-align: center;
-
-
-}
-#sigbuttons{
-  margin-left:900px;
-  margin-top: -30px;
-
-}
-
-.zoom {
-  padding: 0px;
-  
-  transition: transform .2s; /* Animation */
-  width: 120px;
-  height: 100px;
-  
-}
-
-.zoom:hover {
-  transform: scale(2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
