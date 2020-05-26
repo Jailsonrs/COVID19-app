@@ -1,7 +1,7 @@
 source("./src/R/libs.R")
 options(spinner.size=0.5)
-prepro <- readRDS("data/preprocessed/RDS/Prepro.RDS")
-prepro <- as.data.frame(prepro)
+prepro <- data.table::fread("data/raw/HIST_PAINEL_COVIDBR_23mai2020csv.csv", 
+                            select=c("regiao","estado"))
 ##---------------------------------------------------##---------------------------------------------------
 ##---------------------------------------------------##---------------------------------------------------
 htmlTemplate("index.html",
@@ -11,48 +11,38 @@ htmlTemplate("index.html",
                                       accept = c("text/csv",
                                                  "text/comma-separated-values,text/plain",
                                                  ".csv")),
-             Regiao = selectInput(inputId = "REG","Regiao", unique(prepro$regiao), selected="Nordeste"),
-             Estado = selectInput(inputId = "UF","Unidade Federativa",unique(prepro$estado), selected = "CE"),
-             
-             textinpt = textInput("teste","teste","Entre com a busca"),
+             Regiao = selectInput(inputId = "REG","Regiao", unique(prepro$regiao),multiple=TRUE, selected="Nordeste"),
+             Estado = selectInput(inputId = "UF","Unidade Federativa",unique(prepro$estado),multiple=TRUE, selected = "CE"),
+      
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
              ##tab1 = withSpinner(DT::dataTableOutput("table1"), type=6,color="#00b300"),
              tab2 = withSpinner(dataTableOutput("table666"), type=6,color="#00b300"),
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
-             seletor = selectInput("seletor", "selecione", choices=unique(colnames(mtcars)), width ="40px"),
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
              kpi1 = withSpinner(plotlyOutput("grafico1", height = "350px"), type=6,color="#00b300"),
              kpi2 = withSpinner(plotlyOutput("grafico2", height = "350px"), type=6,color="#00b300"),
-             ##---------------------------------------------------##---------------------------------------------------
-             ##superior
              kpi4 = withSpinner(plotlyOutput("graphinput", height = "350px",width = "100%"), type=6,color="#00b300"),
              kpi5 = withSpinner(plotlyOutput("graphinput2", height = "350px",width = "100%"), type=6,color="#00b300"),
              kpi7 = withSpinner(plotlyOutput("graphinput3", height = "320px",width = "100%"), type=6,color="#00b300"),
              kpi8 = withSpinner(plotlyOutput("graphinput4", height = "320px",width = "100%"), type=6,color="#00b300"),
-             ##---------------------------------------------------##---------------------------------------------------
+             kpi9 = withSpinner(plotlyOutput("graphinput5", height = "600px",width = "100%"), type=6,color="#00b300"),
              kpi6 = withSpinner(plotlyOutput("KPIdados", height = "350px"), type=6,color="#00b300"),
              ##kpi2 = withSpinner(plotlyOutput("reativos", height = "299px"), type=6,color="#00b300"),
-             kpi3 = withSpinner(plotlyOutput("reativoss", height = "299px"), type=6,color="#00b300"),
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
-             confianca_seletor=numericInput("conf","Confianca",value=0.5,step=0.001),
-             suporte_seletor=numericInput("sup","Suporte",value=0.0001,step=0.001),
-             ##---------------------------------------------------##---------------------------------------------------
-             ##---------------------------------------------------##---------------------------------------------------
-             info = textOutput("qtdObt",container=a),
-             info2 = textOutput("qtdRecup",container=a),
-             info3 = textOutput("incid",container=a), 
-             info4 = textOutput("mortdd",container=a), 
-             engrenagem = icon("cogs"),
+             info = textOutput("qtdObt"),
+             info2 = textOutput("qtdRecup"),
+             info3 = textOutput("incid"),
+             info4 = textOutput("mortdd"),
+             
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
              menuitem1 = icon("shopping-bag"),
              menuitem2 = icon("shopping-cart"),
              menuitem3 = icon("question-circle"),
-             colnamestab =  verbatimTextOutput("texto"),
              ##---------------------------------------------------##---------------------------------------------------
              ##---------------------------------------------------##---------------------------------------------------
              entrada1=orderInput('source', 'Produtos Recomendados', items = NULL,

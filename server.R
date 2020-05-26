@@ -1,334 +1,214 @@
-##------------------------##
-##------------------------##
-#setwd("~/COVID/SHINY/")fd
-library("glue")
-source("src/R/libs.R")
-source("src/R/MyGgthemes.R")
-library(shiny)
-##library(shinyWidgets)
-library(tidyverse)
-library(DT)
-library(shiny)
-##install.packages("rsconnect")
-##source("./src/R/kpi1.R")
-options(shiny.maxRequestSize = 500*1024^2)
-##------------------------##
-tema <- theme(
-  plot.title=element_text(size=12)
-)
-prepro <- readRDS("data/preprocessed/RDS/Prepro.RDS")
-prepro <- as.data.frame(prepro)
+        library("glue")
+        source("src/R/libs.R")
+        source("src/R/MyGgthemes.R")
+        library(shiny)
+        library(tidyverse)
+        library(DT)
+        library(shiny)
+        library(viridis)
+        library("scales")
+        library("highcharter")
+        options(shiny.maxRequestSize = 500*1024^2)
 
-# df <- economics %>%
-# select(date, psavert, uempmed) %>%
-# gather(key = "variable", value = "value", -date)
+        tema <- theme(
+          plot.title = element_text(size = 12)
+          )
 
-## SHINY SERVER FUNCTION 
-##------------------------##
-function(input, output,session){
-  
-  filteredData <- reactive({prepro})
-  
-  filtered_df <- reactive({
-    
-    res <- filteredData() %>% filter(regiao == input$REG, estado == input$UF, is.na(Município))
-    # res <- res %>% filter(projected_grade >= input$projected)
-    # res <- res %>% filter(age >= input$age[1] & age <= input$age[2])
-    # res <- res %>% filter(ethnicity %in% input$ethnicity | is.null(input$ethnicity))
-    # 
-    res
-    
-  })
-  
-  output$table666 <- renderDataTable({
-    res <- filtered_df() 
-    res
-    
-  })
-  
-  output$KPIdados <- renderPlotly({
-    #   ##if(is.null(arquivo())){return(NULL)}
-    #
-    
-    ggplot(filtered_df(),aes(as.Date(data),casosAcumulado, group=1))+
-      geom_line(colour="steelblue")+
-      scale_y_continuous(limits = c(0,50000), breaks = seq(0,50000,10000))+
-      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      tema2+theme(legend.position = "none",
-        axis.text.x = element_text(angle = 45))+
-      labs(x="Data",y="Quantidade de Casos (Cumulativo)")-> gp
-    gp<-ggplotly(gp)
-    
-    # config(collaborate=FALSE,
-    #  cloud=FALSE,
-    #  displaylogo=FALSE,
-    #  modeBarButtonsToRemove=c(
-    #    "select2d",
-    #    "sendDataToCloud",
-    #    "pan2d",
-    #    "resetScale2d",
-    #    "hoverClosestCartesian",
-    #    "hoverCompareCartesian",
-    #    "lasso2d",
-    #    "zoomIn2d",
-    #    "zoomOut2d")
-    #  )
-    # 
-     ##gp <- layout(gp, margin=list(t = 100),autosize = F)
-    
-     gp
-  })
-  
+        ##prepro <- data.table::fread("data/raw/HIST_PAINEL_COVIDBR_23mai2020csv.csv",drop=c(1:3))
+        ##colnames(prepro)
+        ##prepro$data <- as.Date(prepro$data)
+        ##saveRDS(prepro,"data/preprocessed/dados.RDS")
+        prepro <- readRDS("data/preprocessed/dados.RDS")
 
-filtered_df2 <- reactive({
-     res2 <- filteredData() %>% filter(regiao == "Brasil")
-     res2
-})
-output$graphinput  <- renderPlotly({
+        function(input, output, session){
+
+          filteredData <- reactive({prepro})
+          
+          filtered_df <- reactive({
+            res <- filteredData() %>% 
+            filter(regiao == input$REG, is.na(codmun))
+            res
+          })
+
+          filtered_df0 <- reactive({
+            resultado <- filtered_df() %>% filter(estado == input$UF)
+            resultado
+          })
+
+          newChoices <- reactive({
+            unique(filtered_df()$estado)
+          })
+
+          observe({
+            updateSelectInput(session, "UF",choices = newChoices(),selected="CE")
+          })
+          
+          output$KPIdados <- renderPlotly({
+            ggplot(filtered_df0(),aes(data, casosAcumulado, group = estado,colour=estado))+
+            geom_line()+
+            labs(x = "Data",y="Quantidade de Casos (Cumulativo)")+
+            scale_x_date(date_labels = "%d %b %Y", date_breaks = "2 day")+
+            tema2 -> gp
+            gp <- ggplotly(gp)
+             ##gp <- layout(gp, margin=list(t = 100),autosize = F)
+            gp
+
+          })
+          
+          filtered_df2 <- reactive({
+           res2 <- filteredData() %>% filter(regiao == "Brasil")
+           res2
+         })
+
+          output$graphinput  <- renderPlotly({
+            ggplot(filtered_df2(),aes((data), casosAcumulado, group = 1))+
+            geom_line(colour = "steelblue")+tema2+
+            scale_y_continuous(breaks = seq(0, 300000, 50000))+
+            scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+            labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
+          })
 
 
-      ggplot(filtered_df2(),aes(as.Date(data), casosAcumulado, group = 1))+
-      geom_line(colour = "steelblue")+tema2+
-      scale_y_continuous(breaks = seq(0, 300000, 50000))+
-      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      theme(axis.text.x = element_text(angle = 45))+
-      labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
+          output$qtdObt <- renderText({
+
+            paste(format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100, 2), 
+              digits = 2, 
+              big.mark = ",",
+              small.mark = ",",
+              decimal.mark = ","),"%")
+          })
+
+          output$qtdRecup <- renderText({
+            format(max(na.omit(as.double(filtered_df2()$Recuperadosnovos))),digits=10,big.mark=".", small.mark=",")  
+          })
+
+          output$incid <- renderText({
+            format(round((max(filtered_df2()$casosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 6), 
+              digits = 6,
+              big.mark = ",",
+              small.mark = ",",
+              decimal.mark=",")
+          })
+
+          output$mortdd <-  renderText({
+            format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 2),
+             digits = 3,
+             big.mark = ",",
+             small.mark = ",",
+             decimal.mark=",")
+          })
+
+          output$graphinput2 <- renderPlotly({
+            ggplot(filtered_df2(),aes((data), log(obitosAcumulado), group = 1))+
+            geom_line(colour = "steelblue")+tema2+
+            scale_y_continuous(breaks = seq(0, 10, 2))+
+            scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+            theme(axis.text.x = element_text(angle = 45))+
+            labs(title="", x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
+          })
+
+          filtered_df3 <- reactive({
+            res3 <- filteredData()  %>% filter(is.na(codmun), regiao != "Brasil")
+            res3
+          })
+
+          output$graphinput3 <- renderPlotly({
+
+            ggplot(filtered_df3(),aes((data), casosAcumulado, colour = estado, 
+              group=estado))+
+            geom_line(size = 0.5)+tema2+geom_point(size = 0.5)+
+            scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+            theme(axis.text.x = element_text(angle = 45))+
+            labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
+
+          })
+
+          output$graphinput4 <- renderPlotly({
+            # highchart2() %>% 
+              #hc_title(text = "Not so slow chart ;)") %>% 
+              ##hc_subtitle(text = "Thanks boost module") %>% 
+              #hc_chart(zoomType = "x", animation = FALSE, type = "line") %>% 
+              # hc_plotOptions(series = 
+              #   list(allowForce= TRUE,
+              #        turboThreshold = 1000,
+              #        usePreAllocated = TRUE,
+              #        marker=list(enabled=FALSE))) %>% 
+              # hc_xAxis(type = "datetime", dateTimeLabelFormats = list(day = '%d of %b')) %>%
+              # hc_add_series(data = filtered_df3(), 
+              #               mapping = hcaes(x = (data), y = log(casosAcumulado,10), group = estado),type="line")
+
+            ggplot(filtered_df3(),aes((data), log(casosAcumulado), 
+              colour = estado,
+              group = estado),text=sprintf("Data: %s<br>Log Qtd de casos: %s", data, casosAcumulado))+
+            geom_line(size = 0.3)+tema2+geom_point(size = 0.5)+
+            scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
+            theme(axis.text.x = element_text(angle = 45), legend.position="bottom")+          
+            labs(x = "Data", y = "Log da Quantidade de Casos (Cumulativo)", group="Estado",colour="none")
+
+          })
 
 
+          filtered_df4 <- reactive({
+            filteredData() %>% filter(is.na(codmun)) %>% 
+              mutate(incidencia100k = (casosAcumulado/populacaoTCU2019)*100000,
+                     morte100k = (obitosAcumulado/populacaoTCU2019)*100000) %>%
+              filter(data == max(data)) %>%
+              group_by(estado, morte100k) %>% 
+              select(estado, municipio,data, incidencia100k,morte100k) ->res4
+              res4
+          })
+    ## Ranking mortalidade
+          output$graphinput5 <- renderPlotly({
+            filtered_df4() %>% 
+             ggplot(aes(reorder(estado, morte100k,max), 
+                         morte100k, fill = morte100k))+
+              geom_col(width=0.5, alpha=0.8, position = position_dodge(width=1))+
+              tema2+coord_flip()+
+              geom_text(aes(label = round(morte100k, 2)),colour="black",nudge_y = 1.2,size=2.6)+
+              scale_fill_viridis(direction = -1, begin = 0, end = 0.6)+
+              theme(axis.text.x = element_text(angle = 0), legend.position = "none")+
+              labs(fill = "Incidência",y = "Óbitos por 100 mil Habitantes", x = "Estado")
 
-})
-
-
-output$qtdObt <- renderText({
-  
-  ##format(paste(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100,6),"%"),digits = 6, big.mark = ",", small.mark = ",", decimal.mark=",")
-  paste(format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$casosAcumulado))*100, 2), digits = 2, big.mark = ",", small.mark = ",", decimal.mark=","),"%")
-  
-})
-
-
-output$qtdRecup <- renderText({
-    format(max(na.omit(as.double(filtered_df2()$Recuperadosnovos))),digits=10,big.mark=".", small.mark=",")  
-})
-output$incid <- renderText({
-  format(round((max(filtered_df2()$casosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 6), digits = 6, big.mark = ",", small.mark = ",", decimal.mark=",")
-})
-
-
-output$mortdd <-  renderText({
-  format(round((max(filtered_df2()$obitosAcumulado)/max(filtered_df2()$populacaoTCU2019))*100000, 2), digits = 3, big.mark = ",", small.mark = ",", decimal.mark=",")
-})
-
-output$graphinput2 <- renderPlotly({
-      ggplot(filtered_df2(),aes(as.Date(data), log(obitosAcumulado), group = 1))+
-      geom_line(colour = "steelblue")+tema2+
-      scale_y_continuous(breaks = seq(0, 10, 2))+
-      scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      theme(axis.text.x = element_text(angle = 45))+
-      labs(title="", x = "Data", y = "Quantidade de Óbitos (Cumulativo)")
-})
+              
+            })      
 
 
-
-filtered_df3 <- reactive({
-  res3 <- filteredData()  %>% filter(is.na(Município),regiao != "Brasil")
-  res3
-})
-
-output$graphinput3 <- renderPlotly({
-  
-  ggplot(filtered_df3(),aes(as.Date(data), casosAcumulado,colour=estado,group=estado))+
-  geom_line(size=0.5)+tema2+geom_point(size=0.5)+
-  scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      theme(axis.text.x = element_text(angle = 45))+
-      labs(x = "Data", y = "Quantidade de Casos (Cumulativo)")
-
-})
-
-output$graphinput4 <- renderPlotly({
-  
-  ggplot(filtered_df3(),aes(as.Date(data), log(casosAcumulado),colour=estado,group=estado))+
-  geom_line(size=0.3)+tema2+geom_point(size=0.5)+
-  scale_x_date(date_labels = "%d %b %Y", date_breaks = "5 day")+
-      theme(axis.text.x = element_text(angle = 45))+
-      labs(x = "Data", y = "Log da Quantidade de Casos (Cumulativo)")
-
-})
-
-  ##------------------------##
-  
-  ## Arquivo de entrada 2017-3
-  
-  ##------------------------##
-  
-  ## OBTENDO CAMINHO DO ARQUIVO APÓS A LEITURA
-  
-  # arquivo <- reactive({    
-  #   infile <- input$file1
-  #   if (is.null(infile)) {
-  #     ##RETORNA NULL SE O ARQ NAO FOI CARREGADO
-  #     return(NULL)}
-  #   else{
-  #     
-  ##CASO CONTRARIO RETORNA O CAMINHO DO ARQUIVO E SALVA NO
-  ##OBJETO REATIVO "arquivo"
-  #   return(read_delim(infile$datapath,
-  #                     ";", escape_double = FALSE, trim_ws = TRUE))
-  # }
-  # })
-  
-  
-  ##------------------------##
-  
-  ## Arquivo de saída - Regras
-  
-  ##------------------------##
-  
-  # TabRegras <- reactive({
-  #   if(is.null(arquivo())){return(NULL)}
-  #   Alg(arquivo(), input$conf, input$sup)
-  # })
-  # 
-  
-  # output$VarsInput <- renderUI({
-  #   selectInput(
-  #     "cartAdd","Pesquise o produto desejado",
-  #     choices=unique(TabRegras()[,1]),
-  #     multiple = FALSE,
-  #     selectize=TRUE
-  #     )
-  # 
-  # 
-  # })
-  # 
-  #   output$VarsInput2 <- renderUI({
-  #     selectInput("recprod2", "selecioe  o produto recomendado:",
-  #       choices =TabRegras()[,4], selected = c("teste"))
-  #   })
-  # # 
-  # observe({
-  #   escolhas = subset(TabRegras(),as.character(TabRegras()$NomeProduto)==factor(input$cartAdd))[,4]
-  #   updateSelectInput(session,"recprod2",
-  #     choices=escolhas$`Nome Produto recomendado`)
-  # })
-  
-  ##-----------------------------------------------------------------------##
-  ##-----------------------------------------------------------------------##
-  ############################ SESSÃO DE KPI's ##############################
-  ##-----------------------------------------------------------------------##
-  # 
-  # 
-  ##gp <- layout(gp, margin=list(t = 100),autosize = F)
-  
-  
-  ##-----------------------------------------------------------------------##
-  
-  
-  
-  ########################  TABELA DE RECOMENDAÇÃO ##########################
-  
-  ##-----------------------------------------------------------------------##
-  
-  
-  # output$table2 <- DT::renderDataTable({
-  #   datatable(
-  #     TabRegras(),
-  #     filter="top",
-  #     extensions = c('Buttons'), 
-  #     width="1500px",
-  #     options = list( dom = 'Bfrtip',
-  #       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-  #       pageLength=dim(TabRegras())[1],              
-  #       columnDefs = list(list(width = '500px', targets = c(2,3))),
-  #                     ##deferRender = TRUE,
-  #       scrollY = 400
-  #                     ##lengthMenu = c(500, 1000, 1500, 3000,5000,10000,500000)))
-  #       ))})
-  # 
-  # 
-  
-  
-  # output$qtd <- renderText({
-  # 
-  #   if(is.null(TabRegras())){
-  #     return(NULL)
-  #   }
-  #   format(length(unique(arquivo()$ORCAMENTO)))
-  # })
-  # 
-  #   output$qtdRegras <- renderText({
-  #     if(is.null(TabRegras())){
-  #       return(NULL)
-  #     }
-  #     else{
-  #       format(length((TabRegras()$Produto)))
-  #     }
-  #   })  
-  
-  objeto <- reactive({ input$dest_order })
-  
-  arquivoCompras <- reactive({ input$dest_order })
-  output$order <- renderText({arquivoCompras()})
-  ##observe({
-  
-  ##    toggle(id = "rpan2", condition = input$checkbox,anim = TRUE, animType = "slide", time = 0.5,
-  ## selector = NULL)
-  ##    })
-  produtoSelect <- reactive({input$cartAdd})
-  output$textoselecao <- renderText({as.character(produtoSelect())
-  })
-  
-  produtoCruzado <- reactive({
-    Mydf=data.frame(df.nomeProduto=produtoSelect())
-    Mydf <- left_join(Mydf,Produtos_categoria,by=c(`df.nomeProduto`="PRODUTO"))
-  })
-  
-  observeEvent(input$`btn-add-1`,{shinyjs::html("prod2",sprintf("<div id=\"%s\" class=\"product\"> 
-                                                                <div class=\"product-image\">
-                                                                <img src=%s>
-                                                                </div>
-                                                                <div class=\"product-details\">
-                                                                <div class=\"product-title\">%s</div>
-                                                                <p class=\"product-description\">
-                                                                </p>
-                                                                </div>
-                                                                <div class=\"product-price\">
-                                                                12.99
-                                                                </div>
-                                                                <div class=\"product-quantity\">
-                                                                
-                                                                <input type=\"number\" value=\"2\" min=\"1\">
-                                                                </div>
-                                                                <div class=\"product-removal\">
-                                                                <button id=\"btn-remove\" style=\"width:100px;\" class=\"remove-product\">Remover</button>
-                                                                </div>
-                                                                <div class=\"product-line-price\">
-                                                                25.98
-                                                                </div>
-                                                                </div>",input$cartAdd,paste0("/imagens",images[1]), input$cartAdd),add=TRUE)})
-  
-  
-  observeEvent(input$`rm-prod-1` ,{
-    shinyjs::toggle(input$cartAdd)
-  }
-  )
-  
-  
-  
-  produtos<-reactive({
-    TabRegras() %>%  group_by(`COD_PRODUTO_RECOMENDADO`) %>% 
-      dplyr::summarise(frequencia=n()) %>% 
-      arrange(desc(frequencia)) 
-    
-    dataplot %>% mutate(linha=seq(1,nrow(dataplot),by=1))%>% filter(linha <= 10) %>% 
-      mutate(freq=(frequencia/sum(frequencia))*100,
-             freq_acu=(cumsum(frequencia)/sum(frequencia))*100)
-    
-    
-  })
-  
-  
-}
+          ##------------------------##
+          
+          ## Arquivo de entrada 2017-3
+          
+          ##------------------------##
+          
+          ##CASO CONTRARIO RETORNA O CAMINHO DO ARQUIVO E SALVA NO
+          ##OBJETO REATIVO "arquivo"
+          #   return(read_delim(infile$datapath,
+          #                     ";", escape_double = FALSE, trim_ws = TRUE))
+          # }
+          # })
+          
+          
+          
+          
+          # output$table2 <- DT::renderDataTable({
+          #   datatable(
+          #     TabRegras(),
+          #     filter="top",
+          #     extensions = c('Buttons'), 
+          #     width="1500px",
+          #     options = list( dom = 'Bfrtip',
+          #       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+          #       pageLength=dim(TabRegras())[1],              
+          #       columnDefs = list(list(width = '500px', targets = c(2,3))),
+          #                     ##deferRender = TRUE,
+          #       scrollY = 400
+          #                     ##lengthMenu = c(500, 1000, 1500, 3000,5000,10000,500000)))
+          #       ))})
+          
+          ##    toggle(id = "rpan2", condition = input$checkbox,anim = TRUE, animType = "slide", time = 0.5,
+          ## selector = NULL)
+          ##    })
+          
+        }
 
 
 
