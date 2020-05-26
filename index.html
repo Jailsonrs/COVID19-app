@@ -1,401 +1,437 @@
-              <!DOCTYPE html>  
-              <html lang="en"> 
-              <head>
-                <title>Painel COVID19 </title>
+                      <!DOCTYPE html>  
+                      <html lang="en"> 
+                      <head>
+                        <title>Painel COVID19 </title>
+                        {{ useShinyjs()}}
 
-                {{tags$script(src = "https://code.jquery.com/jquery-3.1.1.min.js")}}
-                {{ useShinyjs()}}
-                {{ bootstrapLib()}}
-                {{ headContent() }}
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        {{ bootstrapLib()}}
+                        {{ headContent() }}
 
-                <link href="style.css" rel="stylesheet"/>
-                <style>
-                  @import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&family=Merriweather+Sans:ital,wght@1,800&display=swap');
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-                </style>
-              </head>
+                        <link href="style.css" rel="stylesheet"/>
+                        <style>
 
-              <body id="bootstrap-override" class="corpo">
-                <!--    -->
-                <nav class="navbar navbar-fixed-top">
-                 <div class="container-fluid">
-                   <div class="navbar-header">
-                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"></button>
-                     <span class="icon-bar"></span>   
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
+                          @import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@500&family=Merriweather+Sans:ital,wght@1,800&display=swap');
 
-                     {{tags$head(tags$style(HTML("
-                     .info-box {
-                     display: block;
-                     min-height: 90px;
-                     background: #fff;
-                     width: 400%;
+                        </style>
+                      </head>
 
-                     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-                     border-radius: 2px;
-                     margin-bottom: 15px;
-                     font-size: 22px;
-                     margin:0;
-                     padding:0;
+                      <body id="bootstrap-override" class="corpo">
+                        <div class="se-pre-con"></div> 
+                        
+                        <!--    -->
+                        <nav class="navbar navbar-fixed-top">
+                         <div class="container-fluid">
+                           <div class="navbar-header">
+                            <p class="navbar-brand">COVID19 - Acompanhamento de Casos</p>  
+                            {{tags$head(tags$style(HTML("
+                            .info-box {
+                            display: block;
+                            min-height: 90px;
+                            background: #fff;
+                            width: 400%;
 
-                   }
-                   .info-box small {
-                   font-size: 22px;
-                 }
-                 .info-box .progress {
-                 background: rgba(0, 0, 0, 0.2);
-                 margin: 5px -10px 5px -10px;
-                 height: 2px;
-               }
-               .info-box .progress,
-               .info-box .progress .progress-bar {
-               border-radius: 0;
-             }
-             .info-box .progress .progress-bar {
-             background: #fff;
-           }
-           .info-box-icon {
-           border-top-left-radius: 2px;
-           border-top-right-radius: 0;
-           border-bottom-right-radius: 0;
-           border-bottom-left-radius: 2px;
-           display: block;
-           float: left;
-           height: 90px;
-           width: 90px;
-           text-align: center;
-           font-size: 45px;
-           line-height: 90px;
-           background: red; !important
-         }
-         .info-box-icon > img {
-         max-width: 100%;
-       }
-       .info-box-content {
-       padding: 5px 10px;
-       margin-left: 90px;
-     }
-     .info-box-number {
-     display: block;
-     font-weight: bold;
-     font-size: 40px;
-   }
-   .progress-description,
-   .info-box-text {
-   display: block;
-   font-size: 14px;
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
- }
- .info-box-text {
- text-transform: uppercase;
- font-weight:bold;
-}
-.info-box-more {
-display: block;
-}
-.progress-description {
-margin: 0;
-}
+                            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                            border-radius: 2px;
+                            margin-bottom: 15px;
+                            font-size: 22px;
+                            margin:0;
+                            padding:0;
 
-.bg-aqua,
-.callout.callout-warning,
-.alert-warning,
-.label-warning,
-.modal-warning .modal-body {
-background-color: #084270 !important;
+                          }
+                          .info-box small {
+                          font-size: 22px;
+                        }
+                        .info-box .progress {
+                        background: rgba(0, 0, 0, 0.2);
+                        margin: 5px -10px 5px -10px;
+                        height: 2px;
+                      }
+                      .info-box .progress,
+                      .info-box .progress .progress-bar {
+                      border-radius: 0;
+                    }
+                    .info-box .progress .progress-bar {
+                    background: #fff;
+                  }
+                  .info-box-icon {
+                  border-top-left-radius: 2px;
+                  border-top-right-radius: 0;
+                  border-bottom-right-radius: 0;
+                  border-bottom-left-radius: 2px;
+                  display: block;
+                  float: left;
+                  height: 90px;
+                  width: 90px;
+                  text-align: center;
+                  font-size: 45px;
+                  line-height: 90px;
+                  background: red; !important
+                }
+                .info-box-icon > img {
+                max-width: 100%;
+              }
+              .info-box-content {
+              padding: 5px 10px;
+              margin-left: 90px;
+            }
+            .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 40px;
+          }
+          .progress-description,
+          .info-box-text {
+          display: block;
+          font-size: 14px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .info-box-text {
+        text-transform: uppercase;
+        font-weight:bold;
+      }
+      .info-box-more {
+      display: block;
+    }
+    .progress-description {
+    margin: 0;
+  }
+
+  .bg-aqua,
+  .callout.callout-warning,
+  .alert-warning,
+  .label-warning,
+  .modal-warning .modal-body {
+  background-color: #084270 !important;
 }")))}}
 
 
-<a class="navbar-brand" href="#">COVID19 - Acompanhamento de Casos</a>
+
 </div>
-<div class="collapse navbar-collapse" id="myNavbar">
-
- <ul class="nav navbar-nav">
-
-
- </div>
-</div>
-
 </nav>
 
-              <!--
-                      <div class="container">
-                          <div class="row">
-                               <div class="col-lg-12 logo">
-                              </div>
-                              <div class="col-lg-4 navega">
-                                  <nav id="barrasup" class="navbar navbar-fixed-top navega navbar-custom">
-                                      <ul class="nav navbar-nav navbar-custom">
-                                          <li class="active" data-toggle="tab"> <a href="#ini" >Início</a> </li>
-                                          <li data-toggle="tab"> <a href="#ini" >Análises e Resultados</a> </li>
-                                          <li data-toggle="tab" class="selected"><a href="#ini" >Dados </a> </li>
-                                          <li data-toggle="tab"> <a class="dropdown" href="#t">Sobre nós </a> </li>
-                                      </ul>
-                                  </nav>
-                              </div>
-                          </div>
-                        </div>-->
-
-                        <div class="container-fluid tab conteudo">
-
-
-                          <!------------------------------>
-                          <!--- ABA PAINEL LATERAL ------->
-                          <!------------------------------>
-
-                          <!------------------------------>
-                          <!-------- ABA DASHBOARD ------->
-                          <!------------------------------>
-                          
-
-                          <div class="container-fluid">
-
-                            <div class="col-lg-12">
-                              <div class="tabbable tabs-above">
-                                <ul class="nav nav-tabs">
-                                  <li class="active">
-                                    <a href="#tab-9462-1" data-toggle="tab" data-value="Plot">Análise Descritiva</a>
-                                  </li>
-                                  <li>
-                                    <a href="#tab-9462-2" data-toggle="tab" data-value="Summary">Análise Preditiva</a>
-                                  </li>
-                                  <li>
-                                    <a href="#tab-9462-3" data-toggle="tab" data-value="Table">Ajuda   </a>
-                                  </li>
-                                </ul>
-                                <div class="tab-content">
-                                  <div class="tab-pane active" data-value="Plot" id="tab-9462-1">
-                                   <div class="row" id="1">
-                                    <div class = "col-lg-3 col-sm-6">        
-                                      <div class="infoBox">
-                                        <label class="card_label">
-                                          Taxa de Letalidade:
-                                        </label>
-                                        <div class="card">
-
-                                          <div class="card-body">
-
-                                            {{info}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class = "col-lg-3 col-sm-6">        
-                                      <div class="infoBox">
-                                        <label class="card_label">
-                                          Pessoas Recuperadas:
-                                        </label>
-
-                                        <div class="card">
-                                          <div class="card-body">
-                                            {{info2}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class = "col-lg-3 col-sm-6">        
-                                      <div class="infoBox">
-                                        <label class="card_label">
-                                          Incidência por 100 mil Habitantes:
-                                        </label>
-
-                                        <div class="card">
-                                          <div class="card-body">
-                                            {{info3}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class = "col-lg-3 col-sm-6">        
-                                      <div class="infoBox">
-                                        <label class="card_label">
-                                          Mortalidade por 100 mil Habitantes:
-                                        </label>
-                                        <div class="card">
-                                          <div class="card-body">
-                                            {{info4}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                  </div>
-
-                                  <div class="row" id="2">
-                                    <div class = "col-lg-6 col-sm-6">        
-                                      <div class="boxCard">
-                                        <label class="card_label" id="logsclabel">
-                                          Quantidade de Casos (Brasil)
-                                        </label>
-                                        <div class="card">
-                                          <div class="card-body">
-                                            {{kpi4}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class = "col-lg-6 col-sm-6">        
-                                      <div class="boxCard">
-                                        <label class="card_label" id="logsclabel">
-                                          Quantidade de Óbitos (Brasil) (Escala Logarítmica)
-                                        </label>
-                                        <div class="card">
-                                          <div class="card-body">
-                                            {{kpi5}}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                  </div>
-
-                                
+                      <!--
+                              <div class="container">
                                   <div class="row">
-                                    <div class = "col-lg-8 col-sm-6">        
-                                      <div class="boxCard">
-                                       <div class="card">
-                                         <label class="card_label" id="logsclabel">
-                                          Quantidade Casos Por Estado
-                                        </label>    
+                                       <div class="col-lg-12 logo">
+                                      </div>
+                                      <div class="col-lg-4 navega">
+                                          <nav id="barrasup" class="navbar navbar-fixed-top navega navbar-custom">
+                                              <ul class="nav navbar-nav navbar-custom">
+                                                  <li class="active" data-toggle="tab"> <a href="#ini" >Início</a> </li>
+                                                  <li data-toggle="tab"> <a href="#ini" >Análises e Resultados</a> </li>
+                                                  <li data-toggle="tab" class="selected"><a href="#ini" >Dados </a> </li>
+                                                  <li data-toggle="tab"> <a class="dropdown" href="#t">Sobre nós </a> </li>
+                                              </ul>
+                                          </nav>
+                                      </div>
+                                  </div>
+                                </div>-->
 
-                                        <div class="card-body">
-                                          {{kpi6}}
+                                <div class="container-fluid tab conteudo">
+
+
+                                  <!------------------------------>
+                                  <!--- ABA PAINEL LATERAL ------->
+                                  <!------------------------------>
+
+                                  <!------------------------------>
+                                  <!-------- ABA DASHBOARD ------->
+                                  <!------------------------------>
+                                  
+
+                                  <div class="container-fluid">
+
+                                    <div class="col-lg-12">
+                                      <div class="tabbable tabs-above">
+                                        <ul class="nav nav-tabs">
+                                          <li class="active">
+                                            <a href="#tab-9462-1" data-toggle="tab" data-value="Plot">Análise Descritiva</a>
+                                          </li>
+                                          <li>
+                                            <a href="#tab-9462-2" data-toggle="tab" data-value="Summary">Análise Preditiva</a>
+                                          </li>
+                                          <li>
+                                            <a href="#tab-9462-3" data-toggle="tab" data-value="Table">Ajuda   </a>
+                                          </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                          <div class="tab-pane active" data-value="Plot" id="tab-9462-1">
+                                           <div class="row" id="1">
+                                            <div class = "col-lg-3 col-sm-12 col-md-12">        
+                                              <div class="infoBox">
+                                                <label class="card_label">
+                                                  Taxa de Letalidade:
+                                                </label>
+                                                <div class="card">
+
+                                                  <div class="card-body">
+                                                    {{info}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class = "col-lg-3 col-sm-12 col-md-12">        
+                                              <div class="infoBox">
+                                                <label class="card_label">
+                                                  Pessoas Recuperadas:
+                                                </label>
+
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{info2}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class = "col-lg-3 col-sm-6 col-md-6">        
+                                              <div class="infoBox">
+                                                <label class="card_label">
+                                                  Incidência por 100k/hab:
+                                                </label>
+
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{info3}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div class = "col-lg-3 col-sm-6 col-md-6">        
+                                              <div class="infoBox">
+                                                <label class="card_label">
+                                                  Mortalidade por 100k/hab:
+                                                </label>
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{info4}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                          </div>
+
+                                          <div class="row" id="2">
+                                            <div class = "col-lg-6 col-sm-12 col-md-12">        
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Quantidade de Casos (Brasil)
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{kpi4}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class = "col-lg-6 col-sm-12 col-md-12">        
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Quantidade de Óbitos (Brasil) (Escala Logarítmica)
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{kpi5}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                          </div>
+
+                                          <div class="row">               
+                                            <div class="col-lg-1">
+                                              <div class="barrinha">
+                                              </div>
+                                              <div class="sesao">
+                                                <p id="textoSesao" >
+                                                  
+                                                  Gráficos Individuais e Taxas de Crescimento
+                                                </p>
+                                              </div> 
+                                            </div>
+                                          </div>
+                                          <hr id="hr1">
+
+                                          <div class="row" id="3">
+                                            <div class = "col-lg-3 col-sm-9">        
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Escolha uma Região e uma UF correspondente:
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{Regiao}}
+                                                    {{Estado}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class = "col-lg-9 col-sm-12 col-md-12">        
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Quantidade de Casos Por Região
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                    {{kpi6}}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                          </div>
+
+                                          <div class="row">
+                                            <div class="col-lg-1">
+                                              <div class="barrinha">
+                                              </div>
+                                              <div class="sesao">
+                                                <p id="textoSesao" >
+                                                  Comparativo entre estados
+                                                </p>
+                                              </div> 
+                                            </div>
+
+                                            <div class="col-lg-5">
+
+                                            </div>  
+
+                                          </div>
+
+                                          <hr id="hr1">
+
+                                          <div class="row">
+                                            <div class="col-lg-6">
+                                            </div>
+                                            <div class ="col-lg-6">                              
+                                              <div class = "hint">
+
+                                                Escalas logaritimicas são úteis para verificar se as taxas de crescimento estão se tornando estacionárias.
+                                                No gráfico abaixo pode-se notar que o número de casos por unidade federativa continua crescendo e não há evidências de estacionariedade.
+                                                Portanto, espera-se que o número de casos creça ainda mais nos próximos dias.
+
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="row">
+                                            <div class="col-lg-6 col-sm-12 col-md-12">
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Crescimento de Casos Para Cada UF em Escala Linear:
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+
+                                                    {{kpi7}}
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                            <div class="col-lg-6">
+                                              <div class="boxCard">
+                                                <label class="card_label" id="logsclabel">
+                                                  Crescimento de Casos Para Cada UF em Escala Logarítimica:
+                                                </label>
+                                                <hr class="hlinhas">
+                                                <div class="card">
+                                                  <div class="card-body">
+
+                                                    {{kpi8}}
+
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          </div>
+
+
+                                          <div class="row">
+                                            <div class="col-lg-6">
+                                              <div id="cardBarplot">
+                                                <label class="card_label" id="logsclabel">
+                                                  Quantidade de Óbitos a cada 100 mil habitantes
+                                                </label>
+                                                <div class="card">
+                                                  <div class="card-body">
+
+                                                    {{kpi9}}
+
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                          </div>
+
+
+
+                                        </div>
+
+
+
+                                        <div class="tab-pane" data-value="Summary" id="tab-9462-2">
+                                          <pre id="summary" class="shiny-text-output"></pre>
+                                        </div>
+                                        <div class="tab-pane" data-value="Table" id="tab-9462-3">
+                                          <div id="table" class="shiny-html-output"></div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
 
-                                  <div class = "col-lg-2">        
-                                    <div class="boxCard">
-                                     <div class="card">
-                                      <div class="card-body">
-                                        {{Regiao}}
-                                        <hr>
-                                        {{Estado}}
+
+
+                                  <!------------------------------>
+                                  <!--- ABA TABELA RECOMENDACAO -->
+                                <!----------------------------
+
+                                <div class="tab-pane" id="2">
+                                  <div class="container">
+                                    <div class="row">
+                                      <div class="col-lg-4 tabela" style="font-size: 80%">
+                                        {{tab2}}
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-
-
-                              <div class="row">
-
-
-                                <div class="col-lg-1">
-                                  <div class="barrinha">
-                                  </div> 
-                                </div>
-
-                                <div class="col-lg-5">
-                                  <div class="sesao">
-                                    <p id="textoSesao" >
-                                      Comparativo entre estados
-                                    </p>
-                                  </div>
-                                </div>  
-                            
-                              </div>
-                                <hr id="hr1">
-
-                              <div class="row">
-                                <div class="col-lg-6">
-                                  
-                                </div>
-                                <div class ="col-lg-6">                              
-                                  <div class = "hint">
-
-                                    Escalas logaritimicas são úteis para verificar se as taxas de crescimento estão se tornando estacionárias.
-                                    No gráfico abaixo pode-se notar que o número de casos por unidade federativa continua crescendo e não há evidências de estacionariedade.
-                                    Portanto, espera-se que o número de casos creça ainda mais nos próximos dias.
-
-                                  </div>
-
-                                </div>
-
-
-
+                      
 
                               </div>
+                              <nav class="navbar navbar-nav navbar-default navbar-fixed-bottom">
 
-                              <div class="row">
-                                <div class="col-lg-6">
-                                  <div class="boxCard">
-                                    <label class="card_label" id="logsclabel">
-                                      Crescimento de Casos Para Cada UF em Escala Linear:
-                                    </label>
-                                    <div class="card">
-                                      <div class="card-body">
-
-                                        {{kpi7}}
-
-
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                
-
-                                <div class="col-lg-6">
-                                  <div class="boxCard">
-                                    <label class="card_label" id="logsclabel">
-                                      Crescimento de Casos Para Cada UF em Escala Logarítimica:
-                                    </label>
-                                    <div class="card">
-                                      <div class="card-body">
-
-                                        {{kpi8}}
-
-
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-
-                              </div>
-                            </div>
-                            <div class="tab-pane" data-value="Summary" id="tab-9462-2">
-                              <pre id="summary" class="shiny-text-output"></pre>
-                            </div>
-                            <div class="tab-pane" data-value="Table" id="tab-9462-3">
-                              <div id="table" class="shiny-html-output"></div>
+                              </nav>-->
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        </body>
 
 
+                        {{tags$script(src="https://cdn.plot.ly/plotly-1.6.3.min.js")}}
+                        {{tags$script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")}}
+                         {{tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js")}}
+                        
+                        {{includeScript("www/alert.js")}}
 
-                      <!------------------------------>
-                      <!--- ABA TABELA RECOMENDACAO -->
-                        <!----------------------------
+                        {{tags$script("$.noConflict(true);")}}
 
-                        <div class="tab-pane" id="2">
-                          <div class="container">
-                            <div class="row">
-                              <div class="col-lg-4 tabela" style="font-size: 80%">
-                                {{tab2}}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-              
-
-                      </div>
-                      <nav class="navbar navbar-nav navbar-default navbar-fixed-bottom">
-
-                      </nav>-->
-                    </div>
-                  </div>
-                </body>
-                {{includeScript("www/alert.js")}}
-
-                </html>
+                        </html>
 
